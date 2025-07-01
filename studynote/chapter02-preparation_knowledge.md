@@ -322,7 +322,104 @@ print(a, a.item(), float(a), int(a))
 
 # 【2】数据预处理
 
+## 【2.1】读取数据集
 
+【test0202_p26_read_dataset_main.py】测试案例-使用pandas包读取数据集
+
+```python
+import os
+import pandas as pd
+
+# 测试案例-读取数据集
+data_file = os.path.join("dataset", "house_tiny.csv")
+data = pd.read_csv(data_file)
+print("data = ", data)
+# data =     NumRooms Alley   Price
+# 0       NaN  Pave  127500
+# 1       2.0   NaN  106000
+# 2       4.0   NaN  178100
+# 3       NaN   NaN  140000
+```
+
+<br>
+
+---
+
+## 【2.2】处理缺失值 
+
+1）NaN代表缺失值，处理缺失值的方法有两种：
+
+- 插值法：用一个代替值代替缺失值；
+- 删除法：直接忽略缺失值； 
+
+【例】构建输入与输出。
+
+通过位置索引iloc，把data分为inputs和outputs，其中前者是data的前两列，后者为data的最后一列。
+
+对于inputs中的缺失值，我们用同一列的均值来替换NaN。
+
+【test0202_p26_proc_missing_value_main.py】测试用例-处理缺失值
+
+```python
+import os
+
+import pandas as pd
+
+data_file = os.path.join("dataset", "house_tiny.csv")
+data = pd.read_csv(data_file)
+print("data = ", data)
+# data =     NumRooms Alley   Price
+# 0       NaN  Pave  127500
+# 1       2.0   NaN  106000
+# 2       4.0   NaN  178100
+# 3       NaN   NaN  140000
+
+# 测试案例-处理缺失值
+print("\n\n=== 测试案例-处理缺失值")
+inputs, outputs = data.iloc[:, 0:2], data.iloc[:, 2:3]
+print("inputs = ", inputs)
+print("outputs = ", outputs)
+# inputs =     NumRooms Alley 
+# 0       NaN  Pave
+# 1       2.0   NaN
+# 2       4.0   NaN
+# 3       NaN   NaN
+# outputs =      Price
+# 0  127500
+# 1  106000
+# 2  178100
+# 3  140000
+
+# 处理缺失值：用均值填充第1列的NaN
+inputs.iloc[:, 0] = inputs.fillna(inputs.iloc[:, 0].mean())
+print("inputs = ", inputs)
+# inputs =     NumRooms Alley
+# 0       3.0  Pave
+# 1       2.0   NaN
+# 2       4.0   NaN
+# 3       3.0   NaN
+
+# 处理缺失值：使用pandas把Alley转为两列：Alley_Pave, Alley_nan
+inputs = pd.get_dummies(inputs, dummy_na=True)  # dummies=仿制品
+print(type(inputs))
+# <class 'pandas.core.frame.DataFrame'>
+
+cols_to_convert = ['Alley_Pave', 'Alley_nan']
+inputs[cols_to_convert] = inputs[cols_to_convert].astype(int)
+print("inputs = ", inputs)
+# inputs =     NumRooms  Alley_Pave  Alley_nan
+# 0       3.0           1          0
+# 1       2.0           0          1
+# 2       4.0           0          1
+# 3       3.0           0          1
+
+```
+
+<br>
+
+---
+
+## 【2.3】转换为张量格式
 
 
 
