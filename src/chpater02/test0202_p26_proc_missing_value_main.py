@@ -1,6 +1,7 @@
 import os
 
 import pandas as pd
+import torch
 
 data_file = os.path.join("dataset", "house_tiny.csv")
 data = pd.read_csv(data_file)
@@ -50,3 +51,17 @@ print("inputs = ", inputs)
 # 2       4.0           0          1
 # 3       3.0           0          1
 
+
+# 测试案例-转换为张量格式
+X = torch.tensor(inputs.values)
+print("X = ", X)
+y = torch.tensor(outputs.values)
+print("y = ", y)
+# X =  tensor([[3., 1., 0.],
+#         [2., 0., 1.],
+#         [4., 0., 1.],
+#         [3., 0., 1.]], dtype=torch.float64)
+# y =  tensor([[127500],
+#         [106000],
+#         [178100],
+#         [140000]])
