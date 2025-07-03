@@ -447,7 +447,7 @@ print("y = ", y)
 
 ## 【3.1】向量
 
-【test0202_p28_vector_main.py】测试案例-向量 
+【test0203_p28_vector_main.py】测试案例-向量 
 
 ```python
 import torch
@@ -482,7 +482,7 @@ print("x.shape = ", x.shape)
 
 ## 【3.2】矩阵
 
-【test0202_p29_matrix_main.py】测试案例-创建矩阵+对称矩阵+矩阵转置
+【test0203_p29_matrix_main.py】测试案例-创建矩阵+对称矩阵+矩阵转置
 
 ```python
 import torch
@@ -528,7 +528,7 @@ print(B == B.T)
 
 特别的， 向量是一阶张量， 矩阵是二阶张量；
 
-【test0202_p29_tensor_main.py】测试案例-把一个向量转换为三阶张量（三维张量）
+【test0203_p29_tensor_main.py】测试案例-把一个向量转换为三阶张量（三维张量）
 
 ```python
 import torch
@@ -555,6 +555,8 @@ print("X = ", X)
 1）性质：给定具有相同形状的任意两个张量， 任何按照元素二元运算的结果都将是相同形状的张量；
 
 2）两个矩阵按元素相乘称为哈达玛积；
+
+【test0203_p31_property_main.py】测试案例-张量性质
 
 ```python
 import torch
@@ -589,6 +591,8 @@ print("A * B = ", A * B)
 ### 【3.4.1】张量加上或乘以一个标量
 
 张量加上或乘以一个标量不会改变张量的形状，其中张量的每个元素都与标量相加或相乘； 
+
+【test0203_p31_property_main.py】测试案例-张量性质
 
 ```python
 # 张量加上或乘以一个标量不会改变张量的形状，其中张量的每个元素都与标量相加或相乘
