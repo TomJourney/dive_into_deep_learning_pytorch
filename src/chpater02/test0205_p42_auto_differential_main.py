@@ -45,3 +45,41 @@ y = x * x
 y.sum().backward() # 等价于 y.backward(torch.ones(len(x)))
 print(x.grad)
 # tensor([0., 2., 4., 6.])
+
+# 2.5.3 分离计算
+x.grad.zero_()
+y = x * x
+u = y.detach()
+z = u * x
+
+z.sum().backward()
+print(x.grad == u)
+# tensor([True, True, True, True])
+
+## 在y上调用反向传播函数，得到y=x*x的导数，2*x
+x.grad.zero_()
+y.sum().backward()
+print(x.grad == 2*x)
+# tensor([True, True, True, True])
+
+# 2.5.4 python 控制流的梯度计算
+
+def f(a):
+    b = a * 2
+    while b.norm() < 1000:
+        b = b*2
+    if b.sum() > 0:
+        c = b
+    else:
+        c = 100 * b
+    return c
+
+# 计算梯度
+a = torch.randn(size=(), requires_grad=True)
+d = f(a)
+d.backward()
+print(a.grad == d/a)
+# tensor(True)
+
+
+
